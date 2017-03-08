@@ -70,6 +70,8 @@ Cài đặt
 ```bash
 yarn add supertest -D
 ```
-
+# Yêu cầu
+Hãy bổ xung cơ chế upload có báo tiến trình sử dụng BlueImp
+[blueimp.github.io/jQuery-File-Upload/](https://blueimp.github.io/jQuery-File-Upload/)
 # Tham khảo
 [MAKE YOUR NODE.JS API BULLETPROOF: HOW TO TEST WITH MOCHA, CHAI, AND SUPERTEST](https://developmentnow.com/2015/02/05/make-your-node-js-api-bulletproof-how-to-test-with-mocha-chai-and-supertest/)
