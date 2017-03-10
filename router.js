@@ -3,6 +3,14 @@ module.exports = function (app) {
     res.send('Hello World!')
   });
 
+  app.get('/about', function (req, res) {
+    res.send('<h1>This is demo for real time Node monitor</h1>');
+  });
+
+   app.get('/hello', function (req, res) {
+    res.send('<h1>Node mon is very cool. It can detect change in javascript file and automatically restart</h1>');
+  });
+
   app.get('/json', function (req, res) {
     res.json({msg: 'Hello'})
   });
