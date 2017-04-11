@@ -26,6 +26,11 @@ module.exports = function (app) {
 		throw new Error('Fail to accessing database because wrong password')
 	});
 
+
+	app.get('/upload', (req, res) => {
+		res.render('upload')
+	})
+
 	app.post('/upload', app.upload.single('photo'), function (req, res, next) {
 		// req.file is the `avatar` file
 		// req.body will hold the text fields, if there were any

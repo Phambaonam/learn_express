@@ -52,11 +52,12 @@ const storage = multer.diskStorage({
 	},
 	filename: function (req, file, cb) {
 		cb(null, shortid.generate() + '-' + file.originalname)
+		//cb(null, file.originalname)
 	}
 })
 
 function fileFilter(req, file, cb) {
-	if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+	if (file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg') {
 		cb(null, true)
 	} else {
 		cb(new Error(file.mimetype + ' is not accepted'))
