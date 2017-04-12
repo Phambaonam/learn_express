@@ -26,6 +26,10 @@ app.get('/', (req, res) => {
 	res.render('sara')
 })
 
+app.get('/tyler', (req, res) => {
+	res.render('tyler')
+})
+
 const server = app.listen(4000, function () {
 	console.log('Attacking app listening on port 4000!')
 })

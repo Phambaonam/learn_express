@@ -1,4 +1,6 @@
-module.exports = function (app) {
+//Export toàn bộ nội dung của function này
+
+module.exports = function (app, csrfProtection) {
 	app.get('/', function (req, res) {
 		res.render('index')
 	});
@@ -7,12 +9,24 @@ module.exports = function (app) {
 		res.send('<h1>This is demo for real time Node monitor</h1>');
 	});
 
+	app.get('/route', function (req, res) {
+		let routes = ''
+		for (let i = 0; i < app._router.stack.length -1; i++) {
+			let layer = app._router.stack[i]
+			if (layer.route != undefined) {
+				routes = routes.concat(`${layer.route.path} <br>`)
+			}
+		}
+		res.send(routes)
+	})
+
 	//----- Render Nunjucks view
 	app.get('/hello', function (req, res) {
 		res.render('hello', {
 			name: 'Trịnh Minh Cường',
 			photo: 'cuong.jpeg',
-			class: ['iOS', 'Python', 'C++', 'Node.js', 'Scratch']})
+			class: [ 'iOS', 'Python', 'C++', 'Node.js', 'Scratch' ]
+		})
 	});
 
 	//------ Return JSON message
@@ -25,6 +39,15 @@ module.exports = function (app) {
 		console.log('Throw error')
 		throw new Error('Fail to accessing database because wrong password')
 	});
+
+	//------ Show cookies
+	app.get('/show_cookie', (req, res) => {
+		// It should display something like this
+		// {"_js_datr":"1XHrWKk0eO29Cs3H-Z8oq88A","_csrf":"RMkBG6vkw92wHsWQjeMrfY3T"}
+		res.cookie('secret_token', 'hello world')  //Set cookie
+
+		res.send(req.cookies) //Get cookie
+	})
 
 
 	app.get('/upload', (req, res) => {
@@ -54,13 +77,23 @@ module.exports = function (app) {
 	})
 
 
-	//------------ Demo CSFR
+	//------------ Demo without CSFR-----------
 
-	app.get('/transfer_money', (req, res) => {
-		res.render('transfer_money')
+	app.get('/transfer', (req, res) => {
+		res.render('transfer')
 	})
 
 	app.post('/transfer', (req, res) => {
+		console.log(req.body)
+		res.send('Money transfered successfully')
+	})
+
+	//Secured transfer money
+	app.get('/secure_transfer', csrfProtection, (req, res) => {
+		res.render('secure_transfer', {csrfToken: req.csrfToken()})
+	})
+
+	app.post('/secure_transfer', csrfProtection, (req, res) => {
 		console.log(req.body)
 		res.send('Money transfered successfully')
 	})
